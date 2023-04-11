@@ -44,6 +44,7 @@ def visualize_shop(df, style, color):
     fig.update_layout(
         autosize=True,
         hovermode='closest',
+        showlegend=False,
         mapbox=dict(
             accesstoken=access_token,
             bearing=1,
@@ -61,16 +62,7 @@ def visualize_shop(df, style, color):
         margin=dict(pad=16, l=0, r=0),
     )
     # Create a custom trace with the desired text and color
-    custom_trace = go.Scattermapbox(
-        lat=[],
-        lon=[],
-        mode='markers',
-        marker=dict(size=10, color='#ffffff'),
-        name='Custom Legend Text'
-    )
 
-    # Add the custom trace to the figure
-    fig.add_trace(custom_trace)
     return fig
 
 def visualize_vkuster(df, style, color):
@@ -81,6 +73,7 @@ def visualize_vkuster(df, style, color):
     fig.update_layout(
         autosize=True,
         hovermode='closest',
+        showlegend=False,
         mapbox=dict(
             accesstoken=access_token,
             bearing=1,
@@ -102,7 +95,7 @@ def visualize_vkuster(df, style, color):
 
 def create_metrics(shop_name, df_houses, df_shop):
     col1, col2, col3 = st.columns(3)
-    c1 = col1.metric("Магазинов", len(df_shop[df_shop['shop'] == str(shop_name)]), f"{int(round(len(df_shop[df_shop['shop'] == str(shop_name)])/len(df_shop),2)*100)}%")
+    c1 = col1.metric("Магазинов", len(df_shop[df_shop['shop'] == str(shop_name)]), f"{int(round(len(df_shop[df_shop['shop'] == str(shop_name)])/len(df_shop),2)*100)}% от общего числа")
     c2 = col2.metric("Охват квартир", df_houses[df_houses[str(shop_name)] == True]['Квартир'].sum(), f"{int(round((df_houses[df_houses[str(shop_name)] == True]['Квартир'].sum())/df_houses['Квартир'].sum(),2)*100)}%")
     c3 = col3.metric("Охват ближайших домов", len(df_houses[df_houses[str(shop_name)] == True]), f"{int(round(len(df_houses[df_houses[str(shop_name)] == True])/len(df_houses),2)*100)}%")
     return c1,c2,c3

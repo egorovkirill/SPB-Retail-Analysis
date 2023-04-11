@@ -85,9 +85,9 @@ if add_selectbox == "Общая статистика":
     with col1:
         st.metric('Магазинов:', len(shops))
     with col2:
-        st.metric('Домов в шаговой доступности:', len(df[df['Магазинов по близости'] != 0]), f"~{int(round(len(df[df['Магазинов по близости'] != 0])/len(df),2)*100)}% от жилищного фонда СПБ")
+        st.metric('Домов в шаговой доступности:', len(df[df['Магазинов по близости'] != 0]), f"~{int(round(len(df[df['Магазинов по близости'] != 0])/len(df),2)*100)}% от всех многоквартирных домов в СПБ")
     with col3:
-        st.metric('Квартир в этих домах:',df[df['Магазинов по близости'] != 0]['Квартир'].sum(), f"~{int(round((df[df['Магазинов по близости'] != 0]['Квартир'].sum()) / (df['Квартир'].sum()), 2)*100)}%")
+        st.metric('Квартир в этих домах:',df[df['Магазинов по близости'] != 0]['Квартир'].sum(), f"~{int(round((df[df['Магазинов по близости'] != 0]['Квартир'].sum()) / (df['Квартир'].sum()), 2)*100)}% от всех квартир в СПБ")
 
     st.text("")
     st.text("")
@@ -113,10 +113,10 @@ if add_selectbox == "Общая статистика":
         )
         .set_global_opts(
             title_opts=opts.TitleOpts(
-                title="Магазины",
+                title="Количество открытых магазинов",
                 pos_left="center",
                 pos_top="1",
-                title_textstyle_opts=opts.TextStyleOpts(color="#FFFFFF"),
+                title_textstyle_opts=opts.TextStyleOpts(color="#000000"),
             ),
             legend_opts=opts.LegendOpts(is_show=False),
         )
@@ -273,13 +273,13 @@ if add_selectbox == "Общая статистика":
     </style>
     """, unsafe_allow_html=True)
     st.markdown("""
-    ## Охват жилищного фонда <span class="custom-text">зонами 5-минутной шаговой доступности</span> продуктовых магазинов:
+    ## Магазины представленных ритейлеров охватывают около 80% многоквартирных домов <span class="custom-text">зонами 5-минутной шаговой доступности</span>:
     """, unsafe_allow_html=True)
     # Display the legend in Streamlit
 
     st.plotly_chart(fig, use_container_width=True, config=config, key=0, height=1000)
 if add_selectbox != "Общая статистика":
-    st.title('Многоквартирные дома в 5 минутной шаговой доступности')
+    st.title(f'Жилые дома в зонах 5-минутной шаговой доступности магазинов "{add_selectbox}"')
     if add_selectbox == "Дикси":
         st.image(
             'https://play-lh.googleusercontent.com/zWsmHqTC2roqBsZx1n3jLIlkrCPoAb6M0EMW0A6H-GPzCV61J6fTn8P6oSxx2AD9eZPT',
